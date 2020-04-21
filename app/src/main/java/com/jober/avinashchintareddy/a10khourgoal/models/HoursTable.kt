@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "table_hours")
-class HoursTable (
+data class HoursTable (
     @PrimaryKey(autoGenerate = true) val id:Int,
     @ColumnInfo(name="date") val date:String,
     @ColumnInfo(name="start_time") val startTime:String,

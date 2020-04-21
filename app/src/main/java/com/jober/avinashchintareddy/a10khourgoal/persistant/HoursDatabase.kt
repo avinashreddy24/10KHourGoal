@@ -5,11 +5,28 @@ import androidx.room.Dao
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.coroutineContext
 
 @Database(entities = arrayOf(HoursDatabase::class),version = 1,exportSchema = false)
 public abstract class HoursDatabase :RoomDatabase(){
 
     abstract fun Dao():Dao
+
+    private class DaoCallback(
+        private val scope: CoroutineScope
+    ):RoomDatabase.Callback(){
+
+        override fun onOpen(db: SupportSQLiteDatabase) {
+            super.onOpen(db)
+            INSTANCE?.let { database ->
+                scope.launch {  }
+            }
+        }
+    }
 
     companion object {
 
