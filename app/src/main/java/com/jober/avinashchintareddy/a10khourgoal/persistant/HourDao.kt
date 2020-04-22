@@ -8,11 +8,14 @@ import androidx.room.Query
 import com.jober.avinashchintareddy.a10khourgoal.models.HoursTable
 
 @Dao
-interface  HoursTableDao{
+interface  HourDao{
 
     @Query("Select * from table_hours where date = :date")
     fun getHoursByDate(date: String): LiveData<List<HoursTable>>
 
     @Insert(onConflict = REPLACE)
-    suspend fun insertSession(date: String,startDate:String,endDate:String)
+    suspend fun insertSession(hours:HoursTable)
+
+    @Query("Select * from table_hours")
+    fun getAllSessions(): LiveData<List<HoursTable>>
 }

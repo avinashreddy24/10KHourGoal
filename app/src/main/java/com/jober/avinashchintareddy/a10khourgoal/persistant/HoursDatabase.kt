@@ -1,20 +1,19 @@
 package com.jober.avinashchintareddy.a10khourgoal.persistant
 
 import android.content.Context
-import androidx.room.Dao
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.jober.avinashchintareddy.a10khourgoal.models.HoursTable
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.coroutineContext
 
-@Database(entities = arrayOf(HoursDatabase::class),version = 1,exportSchema = false)
+@Database(entities = [HoursTable::class],version = 1,exportSchema = true)
 public abstract class HoursDatabase :RoomDatabase(){
 
-    abstract fun Dao():Dao
+    abstract fun helperDao():HourDao
 
     private class DaoCallback(
         private val scope: CoroutineScope
@@ -23,7 +22,13 @@ public abstract class HoursDatabase :RoomDatabase(){
         override fun onOpen(db: SupportSQLiteDatabase) {
             super.onOpen(db)
             INSTANCE?.let { database ->
-                scope.launch {  }
+                scope.launch(Dispatchers.IO) {
+                    var helperDao= database.helperDao();
+
+
+                    var data = HoursTable(1,"26 Aug 2019", "4:00 AM","5:00 PM");
+                  helperDao.insertSession(data)
+                }
             }
         }
     }
@@ -33,22 +38,25 @@ public abstract class HoursDatabase :RoomDatabase(){
         @Volatile
         private var INSTANCE: HoursDatabase?=null
 
-        fun getDatabase(context: Context):HoursDatabase{
-            val tempInstance = INSTANCE
-            if(tempInstance !=null){
-                return tempInstance
-            }
+        fun getDatabase(
+            context: Context,
+            scope: CoroutineScope
+        ):HoursDatabase{
 
-            synchronized(this) {
-                val instance = Room.databaseBuilder(
+            return INSTANCE ?: synchronized(this){
+                val instance =Room.databaseBuilder(
                     context.applicationContext,
                     HoursDatabase::class.java,
                     "hours_database"
-                ).build()
+                )
+                    .addCallback(DaoCallback(scope))
+                    .build()
                 INSTANCE = instance
-                return instance
+                instance
+            }
+
 
             }
         }
-    }
+
 }
