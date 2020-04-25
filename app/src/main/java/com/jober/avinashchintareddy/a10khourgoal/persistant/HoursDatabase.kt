@@ -26,8 +26,13 @@ public abstract class HoursDatabase :RoomDatabase(){
                     var helperDao= database.helperDao();
 
 
-                    var data = HoursTable(1,"26 Aug 2019", "4:00 AM","5:00 PM");
+                    var data = HoursTable(0,"26 Aug 2019", "4:00 AM","5:00 PM");
                   helperDao.insertSession(data)
+                    var data1 = HoursTable(0,"27 Aug 2019", "4:00 AM","5:00 PM");
+                    helperDao.insertSession(data1)
+                    var data2 = HoursTable(0,"29 Aug 2019", "4:00 AM","5:00 PM");
+                    helperDao.insertSession(data2)
+
                 }
             }
         }
