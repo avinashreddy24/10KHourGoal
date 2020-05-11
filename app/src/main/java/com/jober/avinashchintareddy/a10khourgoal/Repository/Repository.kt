@@ -9,7 +9,9 @@ class Repository(private val hourDao: HourDao){
 
     val allSessions: LiveData<List<HoursTable>> = hourDao.getAllSessions()
 
-    suspend fun insert( hours: HoursTable){
+    suspend fun addHours(hours: HoursTable){
         hourDao.insertSession(hours)
     }
+
+
 }

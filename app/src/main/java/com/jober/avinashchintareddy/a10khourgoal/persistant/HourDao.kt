@@ -14,8 +14,9 @@ interface  HourDao{
     fun getHoursByDate(date: String): LiveData<List<HoursTable>>
 
     @Insert(onConflict = REPLACE)
-    suspend fun insertSession(hours:HoursTable)
+     fun insertSession(hours:HoursTable)
 
     @Query("Select * from table_hours")
     fun getAllSessions(): LiveData<List<HoursTable>>
+
 }
