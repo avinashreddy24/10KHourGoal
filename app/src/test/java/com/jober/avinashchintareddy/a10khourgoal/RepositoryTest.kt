@@ -16,47 +16,18 @@ import com.jober.avinashchintareddy.a10khourgoal.persistant.HoursDatabase
 import junit.framework.Assert.assertEquals
 import org.junit.Rule
 
-@RunWith(AndroidJUnit4::class)
 class RepositoryTest {
 
-    public lateinit var hoursDao: HourDao
-    public lateinit var db:HoursDatabase
-
-    private lateinit var repository: Repository
-    @get: Rule
-    val instantTaskExecutorRule = InstantTaskExecutorRule()
-    @Before
-    fun setup(){
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
-
-        //HoursDatabase.getDatabase(context,viewModelScope).helperDao()
-        db = Room.inMemoryDatabaseBuilder(context,HoursDatabase::class.java)
-            .allowMainThreadQueries()
-            .build()
-
-        hoursDao = db.helperDao()
-            //repository = Repository(hoursDao)
-
+    @Test
+    fun convertmillToTimeStamp(){
+        // get repository utils System.mills to Date And Time
     }
 
     @Test
-    fun `should add session in storage`(){
-        var hoursTable= HoursTable(0,"date","date","date")
-            hoursDao.insertSession(hoursTable)
-
-        val allhours= hoursDao.getAllSessions().waitForValue()
-        assertEquals(allhours[0].date,"date")
+    fun compareMillsToDate(){
+        //Date in utc to System mills if greater
     }
 
-    @Test
-    fun `should be able to retrieve the session`(){
-
-    }
-
-    @Test
-    fun `should get session of a day`(){
-
-    }
 }
 
 

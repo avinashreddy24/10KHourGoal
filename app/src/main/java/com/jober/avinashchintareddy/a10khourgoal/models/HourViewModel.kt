@@ -3,6 +3,7 @@ package com.jober.avinashchintareddy.a10khourgoal.models
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jober.avinashchintareddy.a10khourgoal.Repository.Repository
 import com.jober.avinashchintareddy.a10khourgoal.persistant.HoursDatabase
@@ -15,6 +16,7 @@ class HourViewModel(application: Application) :AndroidViewModel(application){
 
 private  val repository: Repository
     val allSessions: LiveData<List<HoursTable>>
+    private var  currentSession = MutableLiveData<HoursTable?>()
 
     private var viewModelJob = Job()
 
@@ -28,9 +30,23 @@ private  val repository: Repository
     }
     fun insert(hour: HoursTable) {
         uiScope.launch {
-            repository.addHours(hour)
+            repository.insertSession(hour)
         }
     }
+
+    fun startSession(){
+        uiScope.launch {
+            val newSession = HoursTable()
+            insert(HoursTable())
+            currentSession.value=repository.getThisSessionFromDatabase()
+        }
+    }
+
+    fun stopSession(){
+        //insert ending time
+    }
+
+
 
 
     // cancel when before any transaction happens

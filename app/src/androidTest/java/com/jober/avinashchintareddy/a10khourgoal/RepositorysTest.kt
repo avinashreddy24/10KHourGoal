@@ -41,15 +41,15 @@ class RepositorysTest {
 
     }
 
+    //
     @Test
     fun shouldaddsessioninstorage(){
-        var hoursTable= HoursTable(0,"date","date","date")
+            val start:Long =System.currentTimeMillis()
+        var hoursTable= HoursTable(0,start,start,12)
             hoursDao.insertSession(hoursTable)
 
-
         val allhours= hoursDao.getAllSessions().waitForValue()
-        //assertEquals(allhours[0].date,"date")
-        assertEquals(allhours[0].date,"date")
+        assertEquals(allhours[0].duration,12)
     }
 
 //    @Test
