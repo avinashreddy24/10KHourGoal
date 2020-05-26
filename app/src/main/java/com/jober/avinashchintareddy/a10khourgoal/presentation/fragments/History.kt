@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -29,6 +30,7 @@ class History : Fragment() {
    lateinit var recyclerView: RecyclerView
     var adapterList:List<HoursTable> = ArrayList<HoursTable>()
      val  adapters :HistoryListAdapter?=null
+    var listTouchHelper: ItemTouchHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +59,12 @@ class History : Fragment() {
                 Log.i("HistoryFragment","test"+adapterList.size);
                 val adapters = HistoryListAdapter(adapterList)
                 recyclerView.apply {  adapter=adapters
-                    layoutManager=LinearLayoutManager(getContext())}
+                    layoutManager=LinearLayoutManager(getContext())
+                listTouchHelper =ItemTouchHelper(ListTouchHelperCallback())
+
+                    listTouchHelper?.attachToRecyclerView(this)
+
+                }
                 if(adapters!=null){
                     adapters?.notifyDataSetChanged()
                 }

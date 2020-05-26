@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.jober.avinashchintareddy.a10khourgoal.R
 import com.jober.avinashchintareddy.a10khourgoal.models.HourViewModel
+import com.jober.avinashchintareddy.a10khourgoal.views.SystemTimeViewer
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -39,6 +40,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        //  attach
         return inflater.inflate(R.layout.home_host, container, false)
     }
 
@@ -64,6 +66,7 @@ class HomeFragment : Fragment() {
             Log.i("onstart", "Invoked start")
 
         }
+        view.findViewById<SystemTimeViewer>(R.id.setText_vw).setTimer(System.currentTimeMillis().toString())
     }
 }
 

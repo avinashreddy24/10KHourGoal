@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SystemTimeViewer">
+        <attr name="showDate" format="boolean"/>
+        <attr name="setTimer" format="string"/>
+    </declare-styleable>
+</resources>

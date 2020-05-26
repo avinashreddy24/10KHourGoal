@@ -1,5 +1,6 @@
 package com.jober.avinashchintareddy.a10khourgoal.presentation.fragments
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.TextureView
 import android.view.View
@@ -23,6 +24,10 @@ class HistoryListAdapter(private val hoursList:  List<HoursTable>) : RecyclerVie
         return ViewHolder(hoursView)
     }
 
+
+
+
+
     override fun getItemCount(): Int {
         return hoursList.size
     }
@@ -38,14 +43,23 @@ class HistoryListAdapter(private val hoursList:  List<HoursTable>) : RecyclerVie
         endTime.setText(currTable.endTime.toString())
         hours.setText(currTable.duration.toString())
 
-
+        holder.bind()
 
     }
 
-    inner class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
+     class ViewHolder
+         (listItemView: View) : RecyclerView.ViewHolder(listItemView) {
         val startText = listItemView.findViewById<TextView>(R.id.tx_start);
         val endText=listItemView.findViewById<TextView>(R.id.tx_end);
         val hours=listItemView.findViewById<TextView>(R.id.tx_hours);
+
+        fun bind()=with(itemView){
+             setOnLongClickListener{
+
+                 Log.i("ViewHodler","Longclickenabled")
+                 true
+             }
+         }
     }
 
 }
