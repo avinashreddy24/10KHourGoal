@@ -37,6 +37,9 @@ class SystemTimeViewer(context: Context, attrs: AttributeSet) : ConstraintLayout
             }
             if(mutilFormat!=null){
                 dateText.text = mutilFormat?.mDate
+                hourText.text=mutilFormat?.mHour
+                minutText.text=mutilFormat?.mMinute
+                secndsText.text=mutilFormat?.mSecond
             }
 //            dateText.text = mutilFormat.mDate
 
@@ -70,7 +73,7 @@ class SystemTimeViewer(context: Context, attrs: AttributeSet) : ConstraintLayout
 
     fun setShowDate(showDate: Boolean){
         mshowDate = showDate
-
+        dateText.visibility= dateVisibility()
         invalidate()
         requestLayout()
     }
@@ -90,6 +93,10 @@ class SystemTimeViewer(context: Context, attrs: AttributeSet) : ConstraintLayout
 
         if(mutilFormat!=null){
             dateText.text = mutilFormat?.mDate
+            hourText.text=mutilFormat?.mHour
+            minutText.text=mutilFormat?.mMinute
+            secndsText.text=mutilFormat?.mSecond
+
         }
 
         invalidate()

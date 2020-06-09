@@ -1,6 +1,7 @@
 package com.jober.avinashchintareddy.a10khourgoal
 
 import android.content.res.Resources
+import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -32,11 +33,14 @@ class Util(time:Long){
     val mHour: String
     val mMinute: String
     val mSecond: String
+    val mtime: String
     init {
         mDate = SimpleDateFormat("MM/dd/YY", Locale.getDefault()).format(time)
-        mHour = TimeUnit.HOURS.convert(time, TimeUnit.MILLISECONDS).toString()
-        mMinute=TimeUnit.MINUTES.convert(time, TimeUnit.MILLISECONDS).toString()
-        mSecond=TimeUnit.SECONDS.convert(time,TimeUnit.MILLISECONDS).toString()
+        mtime = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(time)
+
+        mHour = mtime.split(":")[0]
+        mMinute=mtime.split(":")[1]
+        mSecond=mtime.split(":")[2]
     }
     //
 }

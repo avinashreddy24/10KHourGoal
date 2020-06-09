@@ -66,7 +66,8 @@ class HomeFragment : Fragment() {
             Log.i("onstart", "Invoked start")
 
         }
-        view.findViewById<SystemTimeViewer>(R.id.setText_vw).setTimer(System.currentTimeMillis().toString())
+        view.findViewById<SystemTimeViewer>(R.id.setText_vw).setTimer((1590401410).toString())
+        view.findViewById<SystemTimeViewer>(R.id.setText_vw).setShowDate(true)
     }
 }
 
