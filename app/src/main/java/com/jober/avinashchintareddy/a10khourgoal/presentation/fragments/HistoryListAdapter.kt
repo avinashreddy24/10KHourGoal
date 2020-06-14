@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jober.avinashchintareddy.a10khourgoal.R
 import com.jober.avinashchintareddy.a10khourgoal.models.HoursTable
+import com.jober.avinashchintareddy.a10khourgoal.views.SystemTimeViewer
 import kotlinx.android.synthetic.main.list_view.view.*
 
 class HistoryListAdapter(private val hoursList:  List<HoursTable>) : RecyclerView.Adapter<HistoryListAdapter.ViewHolder>(){
@@ -38,10 +39,14 @@ class HistoryListAdapter(private val hoursList:  List<HoursTable>) : RecyclerVie
         val endTime  = holder.endText
         val hours  = holder.hours
 
+        startTime.setShowDate(true)
+        endTime.setShowDate(true)
+        hours.setShowDate(false)
+
         ///
-        startTime.setText(currTable.startTime.toString())
-        endTime.setText(currTable.endTime.toString())
-        hours.setText(currTable.duration.toString())
+        startTime.setTimer(currTable.startTime.toString())
+        endTime.setTimer(currTable.endTime.toString())
+        hours.setTimer(currTable.duration.toString())
 
         holder.bind()
 
@@ -49,9 +54,9 @@ class HistoryListAdapter(private val hoursList:  List<HoursTable>) : RecyclerVie
 
      class ViewHolder
          (listItemView: View) : RecyclerView.ViewHolder(listItemView) {
-        val startText = listItemView.findViewById<TextView>(R.id.tx_start);
-        val endText=listItemView.findViewById<TextView>(R.id.tx_end);
-        val hours=listItemView.findViewById<TextView>(R.id.tx_hours);
+        val startText = listItemView.findViewById<SystemTimeViewer>(R.id.tx_start);
+        val endText=listItemView.findViewById<SystemTimeViewer>(R.id.tx_end);
+        val hours=listItemView.findViewById<SystemTimeViewer>(R.id.tx_hours);
 
         fun bind()=with(itemView){
              setOnLongClickListener{
