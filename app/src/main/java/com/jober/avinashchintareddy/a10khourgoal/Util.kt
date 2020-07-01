@@ -42,6 +42,6 @@ class Util(time:Long){
         mMinute=mtime.split(":")[1]
         mSecond=mtime.split(":")[2]
     }
-    //
+
 }
 

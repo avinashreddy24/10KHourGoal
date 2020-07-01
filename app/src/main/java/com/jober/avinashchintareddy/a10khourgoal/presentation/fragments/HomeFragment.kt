@@ -8,10 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.jober.avinashchintareddy.a10khourgoal.R
 import com.jober.avinashchintareddy.a10khourgoal.models.HourViewModel
+import com.jober.avinashchintareddy.a10khourgoal.models.RecordedListState
 import com.jober.avinashchintareddy.a10khourgoal.views.SystemTimeViewer
 
 // TODO: Rename parameter arguments, choose names that match
@@ -48,6 +50,8 @@ class HomeFragment : Fragment() {
         super.onAttach(context)
         hourViewModel = ViewModelProvider(this).get(HourViewModel::class.java)
 
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,6 +70,8 @@ class HomeFragment : Fragment() {
             Log.i("onstart", "Invoked start")
 
         }
+
+
         view.findViewById<SystemTimeViewer>(R.id.setText_vw).setTimer((1590401410).toString())
         view.findViewById<SystemTimeViewer>(R.id.setText_vw).setShowDate(true)
     }

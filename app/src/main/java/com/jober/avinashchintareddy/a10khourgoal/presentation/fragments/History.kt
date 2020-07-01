@@ -7,15 +7,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 
 import com.jober.avinashchintareddy.a10khourgoal.R
 import com.jober.avinashchintareddy.a10khourgoal.models.HourViewModel
 import com.jober.avinashchintareddy.a10khourgoal.models.HoursTable
+import com.jober.avinashchintareddy.a10khourgoal.models.RecordedListState
 
 /**
  * A simple [Fragment] subclass.
@@ -44,6 +48,16 @@ class History : Fragment() {
         // Inflate the layout for this fragment
         val view= inflater.inflate(R.layout.fragment_history, container, false)
         recyclerView =(view.findViewById<View>(R.id.RecyclerView)) as RecyclerView
+
+        view.findViewById<Button>(R.id.btn_filter)?.setOnClickListener{
+            Log.i("onFilter", "Invoked Filter")
+            AlertDialog.Builder(requireContext())
+                .setMessage("hchcut")
+                .setCancelable(true)
+                .setNegativeButton("cancel",null)
+                .setPositiveButton("OK",null)
+                .show()
+        }
         return view
     }
 
@@ -63,8 +77,15 @@ class History : Fragment() {
                 listTouchHelper =ItemTouchHelper(ListTouchHelperCallback())
 
                     listTouchHelper?.attachToRecyclerView(this)
+                    addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                            super.onScrollStateChanged(recyclerView, newState)
+                            Log.i("HistoryFragment","test onScroll");
+                            hourViewModel.recordedListState.value?.copy(searchByDate = "date")
+                        }})
+            }
 
-                }
+
                 if(adapters!=null){
                     adapters?.notifyDataSetChanged()
                 }
@@ -73,8 +94,14 @@ class History : Fragment() {
 
         })
 
+        hourViewModel.recordedListState.observe(this, Observer<RecordedListState>{
+            Log.i("test","changedState detected")
+        })
+
 
     }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -83,7 +110,14 @@ class History : Fragment() {
 
     }
 
+    override fun onStart() {
+        super.onStart()
+
+    }
+
 
 
 
 }
+
+

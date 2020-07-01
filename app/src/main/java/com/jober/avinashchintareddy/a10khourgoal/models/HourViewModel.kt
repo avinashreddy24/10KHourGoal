@@ -17,6 +17,7 @@ class HourViewModel(application: Application) :AndroidViewModel(application){
 private  val repository: Repository
     val allSessions: LiveData<List<HoursTable>>
     private var  currentSession = MutableLiveData<HoursTable?>()
+    val recordedListState:MutableLiveData<RecordedListState> = MutableLiveData()
 
     private var viewModelJob = Job()
 
@@ -26,6 +27,7 @@ private  val repository: Repository
         val hourDao = HoursDatabase.getDatabase(application,viewModelScope).helperDao()
         repository = Repository(hourDao)
         allSessions = repository.allSessions
+        recordedListState.value = RecordedListState()
 
     }
     fun insert(hour: HoursTable) {
