@@ -8,13 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 
 import com.jober.avinashchintareddy.a10khourgoal.R
 import com.jober.avinashchintareddy.a10khourgoal.models.HourViewModel
@@ -51,12 +50,10 @@ class History : Fragment() {
 
         view.findViewById<Button>(R.id.btn_filter)?.setOnClickListener{
             Log.i("onFilter", "Invoked Filter")
-            AlertDialog.Builder(requireContext())
-                .setMessage("hchcut")
-                .setCancelable(true)
-                .setNegativeButton("cancel",null)
-                .setPositiveButton("OK",null)
-                .show()
+            var alert:FragmentAlert
+            alert = FragmentAlert()
+            alert.show(parentFragmentManager,"Alert")
+
         }
         return view
     }
