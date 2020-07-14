@@ -5,7 +5,6 @@ import com.jober.avinashchintareddy.a10khourgoal.models.HoursTable
 import com.jober.avinashchintareddy.a10khourgoal.persistant.HourDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.util.*
 
 class Repository(private val hourDao: HourDao){
 
@@ -40,10 +39,23 @@ class Repository(private val hourDao: HourDao){
 
             session
         }
-
-
     }
 
+    suspend fun getHoursByDate(date: Long): LiveData<List<HoursTable>>?{
+        return withContext(Dispatchers.IO){
+            var session = hourDao.getFromDate(date)
+
+            session
+        }
+    }
+
+    suspend fun getFromOldest():LiveData<List<HoursTable>>?{
+        return withContext(Dispatchers.IO){
+            var session = hourDao.getAllOldestSessions()
+
+            session
+        }
+    }
 
 
 }

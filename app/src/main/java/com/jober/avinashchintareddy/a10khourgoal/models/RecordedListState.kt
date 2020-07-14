@@ -1,6 +1,6 @@
 package com.jober.avinashchintareddy.a10khourgoal.models
 
 data class RecordedListState(
-    val searchByDate: String? = null,
-    val searchByDuration: String? = null
+    var searchByDate: String?=null ,
+    var searchByDuration: String?=null
 )

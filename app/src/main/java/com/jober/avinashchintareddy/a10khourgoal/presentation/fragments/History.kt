@@ -60,7 +60,7 @@ class History : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        hourViewModel = ViewModelProvider(this).get(HourViewModel::class.java)
+        hourViewModel = ViewModelProvider(requireActivity()).get(HourViewModel::class.java)
 
         hourViewModel.allSessions.observe(this, Observer {hours->
             hours?.let{
@@ -78,7 +78,8 @@ class History : Fragment() {
                         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                             super.onScrollStateChanged(recyclerView, newState)
                             Log.i("HistoryFragment","test onScroll");
-                            hourViewModel.recordedListState.value?.copy(searchByDate = "date")
+                           var newVal= hourViewModel.recordedListState.value?.copy(searchByDate = "date")
+                            hourViewModel.recordedListState.value=newVal
                         }})
             }
 
@@ -109,7 +110,9 @@ class History : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
+        hourViewModel.recordedListState.observe(this, Observer<RecordedListState>{
+            Log.i("test","changedState detected")
+        })
     }
 
 

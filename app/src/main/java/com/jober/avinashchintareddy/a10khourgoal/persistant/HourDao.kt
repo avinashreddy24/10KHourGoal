@@ -30,4 +30,10 @@ interface  HourDao{
     @Query("Select * from table_hours ORDER BY id DESC LIMIT 1")
     fun getThisSession(): HoursTable?
 
+    @Query("Select * from table_hours where start_Time >= :date")
+    fun getFromDate(date: Long):LiveData<List<HoursTable>>
+
+    @Query("Select * from table_hours ORDER BY start_time  DESC")
+    fun getAllOldestSessions(): LiveData<List<HoursTable>>
+
 }

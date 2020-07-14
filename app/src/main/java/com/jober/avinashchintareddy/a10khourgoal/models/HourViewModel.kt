@@ -28,7 +28,6 @@ private  val repository: Repository
         repository = Repository(hourDao)
         allSessions = repository.allSessions
         recordedListState.value = RecordedListState()
-
     }
     fun insert(hour: HoursTable) {
         uiScope.launch {
