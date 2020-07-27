@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         hourViewModel = ViewModelProvider(this).get(HourViewModel::class.java)
 
 
-        hourViewModel.allSessions.observe(this, Observer { hours ->
+        hourViewModel.allSessions?.observe(this, Observer { hours ->
             hours?.let {
 
 //                var date =hours.get(0).date

@@ -30,16 +30,21 @@ class FragmentAlert : DialogFragment(){
         builder.setTitle("From DialogFragment")
         builder.setNeutralButton("neutral",object :DialogInterface.OnClickListener{
             override fun onClick(dialog:DialogInterface, which:Int) {
-                var newVal= hourViewModel.recordedListState.value?.copy(searchByDate = "date")
+/*
+               var newVal= hourViewModel.recordedListState.value?(searchByDate = "date")
                 hourViewModel.recordedListState.value=newVal
+*/
+                hourViewModel.recordedListState.value=RecordedListState.fromDate(1212)
                             counter++
             }
         })
         builder.setPositiveButton("it's ok ", null)
         builder.setNegativeButton("No", object :DialogInterface.OnClickListener{
             override fun onClick(dialog:DialogInterface, which:Int) {
-                hourViewModel.recordedListState.value?.copy(searchByDate="erferf" )
+/*
+                hourViewModel.recordedListState.value?(searchByDate="erferf" )
                 counter++
+*/
                 dismiss()
 
             }

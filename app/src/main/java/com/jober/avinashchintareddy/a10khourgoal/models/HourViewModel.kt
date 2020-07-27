@@ -1,6 +1,7 @@
 package com.jober.avinashchintareddy.a10khourgoal.models
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,9 +16,10 @@ import kotlinx.coroutines.launch
 class HourViewModel(application: Application) :AndroidViewModel(application){
 
 private  val repository: Repository
-    val allSessions: LiveData<List<HoursTable>>
+    var allSessions: LiveData<List<HoursTable>>
     private var  currentSession = MutableLiveData<HoursTable?>()
     val recordedListState:MutableLiveData<RecordedListState> = MutableLiveData()
+    val state: MutableLiveData<RecordedListState> = MutableLiveData()
 
     private var viewModelJob = Job()
 
@@ -27,7 +29,8 @@ private  val repository: Repository
         val hourDao = HoursDatabase.getDatabase(application,viewModelScope).helperDao()
         repository = Repository(hourDao)
         allSessions = repository.allSessions
-        recordedListState.value = RecordedListState()
+        
+        recordedListState.value = RecordedListState.noFilter()
     }
     fun insert(hour: HoursTable) {
         uiScope.launch {
@@ -46,6 +49,21 @@ private  val repository: Repository
     fun stopSession(){
         //insert ending time
     }
+
+    fun getNoFilterHistory(){
+        uiScope.launch {
+            allSessions = repository.allSessions
+        }
+    }
+
+    fun getFromOlderHistory(){
+        Log.i("HourViewModel","getFromOlderHistory")
+
+        uiScope.launch {
+            allSessions = repository.getFromOldest()
+        }
+    }
+
 
 
 

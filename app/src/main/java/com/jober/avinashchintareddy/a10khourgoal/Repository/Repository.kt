@@ -1,6 +1,8 @@
 package com.jober.avinashchintareddy.a10khourgoal.Repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.jober.avinashchintareddy.a10khourgoal.models.HoursTable
 import com.jober.avinashchintareddy.a10khourgoal.persistant.HourDao
 import kotlinx.coroutines.Dispatchers
@@ -49,10 +51,10 @@ class Repository(private val hourDao: HourDao){
         }
     }
 
-    suspend fun getFromOldest():LiveData<List<HoursTable>>?{
+    suspend fun getFromOldest():LiveData<List<HoursTable>>{
         return withContext(Dispatchers.IO){
             var session = hourDao.getAllOldestSessions()
-
+            Log.i("Repository",""+session.value);
             session
         }
     }

@@ -1,6 +1,10 @@
 package com.jober.avinashchintareddy.a10khourgoal.models
 
-data class RecordedListState(
-    var searchByDate: String?=null ,
-    var searchByDuration: String?=null
-)
+sealed class RecordedListState {
+    class noFilter : RecordedListState()
+    class olderToNew: RecordedListState()
+    class fromDate(val date:Long): RecordedListState()
+
+//    var searchByDate: String?=null ,
+//    var searchByDuration: String?=null
+}

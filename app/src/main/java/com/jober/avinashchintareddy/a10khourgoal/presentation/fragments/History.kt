@@ -66,8 +66,7 @@ class History : Fragment() {
             hours?.let{
                 Log.i("HistoryFragment","test"+hours.size);
             adapterList=hours
-
-                Log.i("HistoryFragment","test"+adapterList.size);
+                if(adapters==null){
                 val adapters = HistoryListAdapter(adapterList)
                 recyclerView.apply {  adapter=adapters
                     layoutManager=LinearLayoutManager(getContext())
@@ -78,15 +77,13 @@ class History : Fragment() {
                         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                             super.onScrollStateChanged(recyclerView, newState)
                             Log.i("HistoryFragment","test onScroll");
-                           var newVal= hourViewModel.recordedListState.value?.copy(searchByDate = "date")
-                            hourViewModel.recordedListState.value=newVal
+
                         }})
-            }
+            }}
 
 
-                if(adapters!=null){
-                    adapters?.notifyDataSetChanged()
-                }
+
+
 
         }
 
@@ -110,7 +107,13 @@ class History : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        hourViewModel.recordedListState.observe(this, Observer<RecordedListState>{
+        hourViewModel.recordedListState.observe(this, Observer{
+            when(it){
+                is RecordedListState.noFilter -> Log.i("actHistory","nofilter")
+                is RecordedListState.olderToNew -> Log.i("actHistory","older")
+                is RecordedListState.fromDate -> hourViewModel.getFromOlderHistory()
+
+            }
             Log.i("test","changedState detected")
         })
     }
