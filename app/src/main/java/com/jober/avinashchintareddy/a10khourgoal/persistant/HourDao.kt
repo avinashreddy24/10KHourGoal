@@ -1,11 +1,9 @@
 package com.jober.avinashchintareddy.a10khourgoal.persistant
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
+import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
-import androidx.room.Query
-import androidx.room.Update
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.jober.avinashchintareddy.a10khourgoal.models.HoursTable
 
 @Dao
@@ -22,7 +20,7 @@ interface  HourDao{
      fun insertSession(hours:HoursTable)
 
     @Query("Select * from table_hours")
-    fun getAllSessions(): LiveData<List<HoursTable>>
+    fun getAllSessions(): List<HoursTable>
 
     @Query("DELETE FROM table_hours")
     fun clear()
@@ -31,9 +29,9 @@ interface  HourDao{
     fun getThisSession(): HoursTable?
 
     @Query("Select * from table_hours where start_Time >= :date")
-    fun getFromDate(date: Long):LiveData<List<HoursTable>>
+    fun getFromDate(date: Long):List<HoursTable>
 
     @Query("Select * from table_hours ORDER BY start_time  DESC")
-    fun getAllOldestSessions(): LiveData<List<HoursTable>>
+    fun getAllOldestSessions(): List<HoursTable>
 
 }

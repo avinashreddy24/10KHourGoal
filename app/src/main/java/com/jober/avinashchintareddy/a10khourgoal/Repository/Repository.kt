@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 
 class Repository(private val hourDao: HourDao){
 
-    val allSessions: LiveData<List<HoursTable>> = hourDao.getAllSessions()
+
 
     suspend fun insertSession(hours: HoursTable){
         withContext(Dispatchers.IO) {
@@ -43,7 +43,7 @@ class Repository(private val hourDao: HourDao){
         }
     }
 
-    suspend fun getHoursByDate(date: Long): LiveData<List<HoursTable>>?{
+    suspend fun getHoursByDate(date: Long): List<HoursTable>{
         return withContext(Dispatchers.IO){
             var session = hourDao.getFromDate(date)
 
@@ -51,10 +51,16 @@ class Repository(private val hourDao: HourDao){
         }
     }
 
-    suspend fun getFromOldest():LiveData<List<HoursTable>>{
+    suspend fun getFromOldest():List<HoursTable>{
         return withContext(Dispatchers.IO){
             var session = hourDao.getAllOldestSessions()
-            Log.i("Repository",""+session.value);
+            session
+        }
+    }
+
+    suspend fun getAllSessionsNoFilters():List<HoursTable>{
+        return withContext(Dispatchers.IO){
+            var session = hourDao.getAllSessions()
             session
         }
     }

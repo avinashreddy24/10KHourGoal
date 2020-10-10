@@ -109,9 +109,10 @@ class History : Fragment() {
         super.onStart()
         hourViewModel.recordedListState.observe(this, Observer{
             when(it){
-                is RecordedListState.noFilter -> Log.i("actHistory","nofilter")
-                is RecordedListState.olderToNew -> Log.i("actHistory","older")
-                is RecordedListState.fromDate -> hourViewModel.getFromOlderHistory()
+                is RecordedListState.noFilter -> hourViewModel.getNoFilterHistory()
+                is RecordedListState.olderToNew -> hourViewModel.getListFromDate(323523)
+                is RecordedListState.fromDate -> Log.i("Activity","::"+it.date)
+
 
             }
             Log.i("test","changedState detected")

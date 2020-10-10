@@ -28,12 +28,6 @@ class MainActivity : AppCompatActivity() {
         hourViewModel.allSessions?.observe(this, Observer { hours ->
             hours?.let {
 
-//                var date =hours.get(0).date
-//                var start= hours.get(0).startTime
-//                var end = hours.get(0).endTime
-//                val toast = Toast.makeText(this,""+hours.size+": "+date+"->"+start+"->"+end,Toast.LENGTH_LONG)
-//                toast.show()
-//                Log.i("MainActivity",hours.get(0).date+"--"+hours.get(0).endTime+"--"+hours.get(0).startTime)
             }
         })
 

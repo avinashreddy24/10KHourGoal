@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class HourViewModel(application: Application) :AndroidViewModel(application){
 
 private  val repository: Repository
-    var allSessions: LiveData<List<HoursTable>>
+    var allSessions: MutableLiveData<List<HoursTable>> = MutableLiveData()
     private var  currentSession = MutableLiveData<HoursTable?>()
     val recordedListState:MutableLiveData<RecordedListState> = MutableLiveData()
     val state: MutableLiveData<RecordedListState> = MutableLiveData()
@@ -28,8 +28,7 @@ private  val repository: Repository
     init {
         val hourDao = HoursDatabase.getDatabase(application,viewModelScope).helperDao()
         repository = Repository(hourDao)
-        allSessions = repository.allSessions
-        
+        getNoFilterHistory()
         recordedListState.value = RecordedListState.noFilter()
     }
     fun insert(hour: HoursTable) {
@@ -52,7 +51,12 @@ private  val repository: Repository
 
     fun getNoFilterHistory(){
         uiScope.launch {
-            allSessions = repository.allSessions
+            allSessions.value = repository.getAllSessionsNoFilters()
+        }
+    }
+    fun getListFromDate(date: Long){
+        uiScope.launch {
+            allSessions.value = repository.getHoursByDate(date)
         }
     }
 
@@ -60,7 +64,7 @@ private  val repository: Repository
         Log.i("HourViewModel","getFromOlderHistory")
 
         uiScope.launch {
-            allSessions = repository.getFromOldest()
+            allSessions.value =repository.getFromOldest()
         }
     }
 
