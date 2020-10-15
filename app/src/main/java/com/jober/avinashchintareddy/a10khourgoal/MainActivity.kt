@@ -20,7 +20,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
+
+
 
         hourViewModel = ViewModelProvider(this).get(HourViewModel::class.java)
 
@@ -31,14 +34,14 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-
+        if (savedInstanceState == null) {
         // get fragment
         val host: NavHostFragment= supportFragmentManager.
             findFragmentById(R.id.host_fragment) as NavHostFragment? ?:return
 
         // add navcontroller
 
-        val navController = host.navController
+        val navController = host.navController}
 
         //assign
 
@@ -47,6 +50,12 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return item.onNavDestinationSelected(findNavController(R.id.host_fragment))
                 ||super.onOptionsItemSelected(item)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        Log.i("saved instance activity","wefwef")
     }
 
 
