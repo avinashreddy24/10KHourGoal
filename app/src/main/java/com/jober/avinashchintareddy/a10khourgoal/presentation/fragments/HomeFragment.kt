@@ -31,12 +31,7 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 /**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [HomeFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * HomeFragment for staring a new session
  */
 class HomeFragment : Fragment() {
 
@@ -63,11 +58,11 @@ class HomeFragment : Fragment() {
     }
 
     private  fun setObservers() {
-        TimerService.timerEvent.observe( this, Observer {
+        TimerService.timerEvent.observe( viewLifecycleOwner, Observer {
             updateUi(it)
         })
 
-        TimerService.timerInMills.observe(this, Observer {
+        TimerService.timerInMills.observe(viewLifecycleOwner, Observer {
             timerSystem.setTimer(it.toString())
         })
     }
@@ -86,7 +81,8 @@ class HomeFragment : Fragment() {
         startButton = view.findViewById<Button>(R.id.btn_start)
         stopButton = view.findViewById<Button>(R.id.btn_end)
         timerSystem = view.findViewById<SystemTimeViewer>(R.id.setText_vw)
-        timerSystem.setShowDate(true)
+        timerSystem.setShowDate(false)
+
         setObservers()
         view.findViewById<Button>(R.id.button)?.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_history, null)

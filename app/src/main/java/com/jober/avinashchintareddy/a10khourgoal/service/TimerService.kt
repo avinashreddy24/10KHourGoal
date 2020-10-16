@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class TimerService :LifecycleService(){
+class TimerService : LifecycleService(){
 
     private  var timeStarted = 0L
     private var isServiceStopped = false
