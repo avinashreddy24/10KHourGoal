@@ -16,11 +16,13 @@ import androidx.navigation.fragment.findNavController
 import com.jober.avinashchintareddy.a10khourgoal.ACTION_START_SERVICE
 import com.jober.avinashchintareddy.a10khourgoal.ACTION_STOP_SERVICE
 import com.jober.avinashchintareddy.a10khourgoal.R
+import com.jober.avinashchintareddy.a10khourgoal.Util
 import com.jober.avinashchintareddy.a10khourgoal.models.HourViewModel
 import com.jober.avinashchintareddy.a10khourgoal.models.TimerEvent
 import com.jober.avinashchintareddy.a10khourgoal.service.TimerService
 import com.jober.avinashchintareddy.a10khourgoal.views.SystemTimeViewer
 import kotlinx.coroutines.*
+import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
 import kotlin.math.log
 import kotlin.random.Random
@@ -38,7 +40,6 @@ class HomeFragment : Fragment() {
     private lateinit var hourViewModel: HourViewModel
     private var isTimerRunning =false
     lateinit var startButton:Button
-    lateinit var stopButton:Button
     lateinit var timerSystem:SystemTimeViewer
 
 
@@ -63,8 +64,15 @@ class HomeFragment : Fragment() {
         })
 
         TimerService.timerInMills.observe(viewLifecycleOwner, Observer {
-            timerSystem.setTimer(it.toString())
-        })
+            if(hourViewModel.currentSession.value!=null) {
+                val currTime = hourViewModel.currentSession.value?.startTime
+                Log.i("Fragment home","now time "+currTime)
+
+                val timeValue = System.currentTimeMillis() - currTime!!
+                Log.i("Fragment home","now time "+ TimeUnit.MINUTES.convert(timeValue, TimeUnit.MILLISECONDS)+":"+Util(timeValue).mMinute+":"+Util(timeValue).mSecond)
+                timerSystem.setTimer(timeValue.toString())
+            }})
+
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
@@ -77,23 +85,18 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        retainInstance=true
         startButton = view.findViewById<Button>(R.id.btn_start)
-        stopButton = view.findViewById<Button>(R.id.btn_end)
         timerSystem = view.findViewById<SystemTimeViewer>(R.id.setText_vw)
-        timerSystem.setShowDate(false)
+        timerSystem.setShowDate(false,true)
 
         setObservers()
         view.findViewById<Button>(R.id.button)?.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_history, null)
         }
 
-        stopButton.setOnClickListener {
-            //hourViewModel.stopSession()
-            Log.i("onend", "Invoked end")
-        }
+
         startButton.setOnClickListener {
-           // hourViewModel.startSession()
+
             toggleTimer()
 
         }
@@ -107,10 +110,12 @@ class HomeFragment : Fragment() {
     private fun updateUi(event: TimerEvent){
         when(event){
             is TimerEvent.START ->{
+                hourViewModel.startSession()
                 isTimerRunning = true
                 startButton.text = "Stop"
             }
             is TimerEvent.END ->{
+                hourViewModel.stopSession()
                 isTimerRunning = false
                 startButton.text = "Start"
             }

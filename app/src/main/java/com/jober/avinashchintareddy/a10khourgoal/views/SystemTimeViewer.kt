@@ -2,6 +2,7 @@ package com.jober.avinashchintareddy.a10khourgoal.views
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
@@ -10,9 +11,11 @@ import androidx.core.content.getSystemService
 import com.jober.avinashchintareddy.a10khourgoal.R
 import com.jober.avinashchintareddy.a10khourgoal.Util
 import org.w3c.dom.Text
+import java.util.concurrent.TimeUnit
 
 class SystemTimeViewer(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs){
     var mshowDate:Boolean
+    var offSet: Boolean = false
     var msetTimer:String?
     val dateText: TextView
     val hourText: TextView
@@ -35,14 +38,7 @@ class SystemTimeViewer(context: Context, attrs: AttributeSet) : ConstraintLayout
             if(msetTimer!=null){
                 setUtil((msetTimer)!!.toLong())
             }
-            if(mutilFormat!=null){
-                dateText.text = mutilFormat?.mDate
-                hourText.text=mutilFormat?.mHour
-                minutText.text=mutilFormat?.mMinute
-                secndsText.text=mutilFormat?.mSecond
-            }
-//            dateText.text = mutilFormat.mDate
-
+            updateFormat()
         }
         finally {
             recycle()
@@ -53,9 +49,32 @@ class SystemTimeViewer(context: Context, attrs: AttributeSet) : ConstraintLayout
 
 
 }
-    fun setup(){
 
+    private fun updateFormat(){
+        Log.i("System Timer","UpdateFormater")
+        when(offSet){
+           true  ->{
+                Log.i("System Timer","offset IN")
+
+                hourText.text=TimeUnit.HOURS.convert(msetTimer!!.toLong(), TimeUnit.MILLISECONDS).toString()
+                    minutText.text=TimeUnit.MINUTES.convert(msetTimer!!.toLong(), TimeUnit.MILLISECONDS).toString()
+                    secndsText.text=TimeUnit.SECONDS.convert(msetTimer!!.toLong(), TimeUnit.MILLISECONDS).toString()
+            }
+
+             false -> {
+                 Log.i("System Timer","offset Off")
+
+                 if(mutilFormat!=null  ){
+
+                    dateText.text = mutilFormat?.mDate
+                    hourText.text=mutilFormat?.mHour
+                    minutText.text=mutilFormat?.mMinute
+                    secndsText.text=mutilFormat?.mSecond
+                }
+            }
+        }
     }
+
 
     fun setUtil(value:Long){
         mutilFormat = Util(value)
@@ -68,14 +87,21 @@ class SystemTimeViewer(context: Context, attrs: AttributeSet) : ConstraintLayout
        }
     }
     fun showDate(): Boolean{
-        return mshowDate;
+        return mshowDate
     }
 
-    fun setShowDate(showDate: Boolean){
+    fun setShowDate(showDate: Boolean,offsetValue: Boolean){
         mshowDate = showDate
+        offSet= offsetValue
         dateText.visibility= dateVisibility()
         invalidate()
         requestLayout()
+    }
+
+    fun setModeOffset(offsetValue: Boolean){
+        invalidate()
+        requestLayout()
+
     }
     fun setString(data: String){
         msetTimer = data
@@ -89,15 +115,11 @@ class SystemTimeViewer(context: Context, attrs: AttributeSet) : ConstraintLayout
     fun setTimer(timeValue:String){
         msetTimer=timeValue
 
+
         setUtil(timeValue.toLong())
 
-        if(mutilFormat!=null){
-            dateText.text = mutilFormat?.mDate
-            hourText.text=mutilFormat?.mHour
-            minutText.text=mutilFormat?.mMinute
-            secndsText.text=mutilFormat?.mSecond
+        updateFormat()
 
-        }
 
         invalidate()
     }

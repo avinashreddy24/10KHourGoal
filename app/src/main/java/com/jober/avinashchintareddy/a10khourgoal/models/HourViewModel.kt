@@ -10,12 +10,13 @@ import androidx.lifecycle.viewModelScope
 import com.jober.avinashchintareddy.a10khourgoal.Repository.Repository
 import com.jober.avinashchintareddy.a10khourgoal.persistant.HoursDatabase
 import kotlinx.coroutines.*
+import kotlin.math.absoluteValue
 
 class HourViewModel(application: Application) :AndroidViewModel(application){
 
 private  val repository: Repository
     var allSessions: MutableLiveData<List<HoursTable>> = MutableLiveData()
-    private var  currentSession = MutableLiveData<HoursTable?>()
+     var  currentSession = MutableLiveData<HoursTable?>()
     val recordedListState:MutableLiveData<RecordedListState> = MutableLiveData()
     val state: MutableLiveData<RecordedListState> = MutableLiveData()
 
@@ -38,7 +39,7 @@ private  val repository: Repository
     fun startSession(){
         uiScope.launch {
             val newSession = HoursTable()
-            insert(HoursTable())
+            insert(newSession)
             currentSession.value=repository.getThisSessionFromDatabase()
         }
     }

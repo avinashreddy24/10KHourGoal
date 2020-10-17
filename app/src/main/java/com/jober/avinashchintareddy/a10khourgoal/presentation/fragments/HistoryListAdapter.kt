@@ -39,9 +39,9 @@ class HistoryListAdapter(private val hoursList:  List<HoursTable>) : RecyclerVie
         val endTime  = holder.endText
         val hours  = holder.hours
 
-        startTime.setShowDate(true)
-        endTime.setShowDate(true)
-        hours.setShowDate(false)
+        startTime.setShowDate(true,false)
+        endTime.setShowDate(true,false)
+        hours.setShowDate(false,false)
 
         ///
         startTime.setTimer(currTable.startTime.toString())
