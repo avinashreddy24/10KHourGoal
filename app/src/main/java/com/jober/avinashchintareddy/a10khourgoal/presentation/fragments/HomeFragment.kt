@@ -115,9 +115,11 @@ class HomeFragment : Fragment() {
                 startButton.text = "Stop"
             }
             is TimerEvent.END ->{
-                hourViewModel.stopSession()
-                isTimerRunning = false
-                startButton.text = "Start"
+                if(isTimerRunning) {
+                    hourViewModel.stopSession()
+                    isTimerRunning = false
+                    startButton.text = "Start"
+                }
             }
         }
     }
@@ -143,6 +145,14 @@ class HomeFragment : Fragment() {
         context?.startService(Intent(context,TimerService::class.java).apply{
             this.action = action
         })
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.i("On Stop","fragment")
+        if(!isTimerRunning){
+        hourViewModel.currentSession.value=null}
+
     }
 
 

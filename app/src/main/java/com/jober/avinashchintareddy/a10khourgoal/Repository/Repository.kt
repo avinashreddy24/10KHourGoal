@@ -21,6 +21,7 @@ class Repository(private val hourDao: HourDao){
 
     suspend fun updateSession(hours:HoursTable){
         withContext(Dispatchers.IO){
+            hours.duration = hours.endTime-hours.startTime
             hourDao.update(hours)
         }
     }

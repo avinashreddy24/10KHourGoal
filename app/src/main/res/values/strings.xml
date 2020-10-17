@@ -5,4 +5,7 @@
     <string name="hello_blank_fragment">Hello home fragment</string>
     <string name="history">History</string>
     <string name="start">Start</string>
+    <string name="dateFilter">Date Filter</string>
+    <string name="fromNew">RecentTop</string>
+    <string name="fromOld">OlderTop</string>
 </resources>

@@ -46,6 +46,13 @@ private  val repository: Repository
 
     fun stopSession(){
         //insert ending time
+
+        uiScope.launch {
+            currentSession.value?.endTime=System.currentTimeMillis()
+
+          repository.updateSession(currentSession.value!!)
+        }
+
     }
 
     fun getNoFilterHistory(){

@@ -11,8 +11,8 @@ data class HoursTable (
     @ColumnInfo(name = "id")
     val id:Long =0L,
     @ColumnInfo(name="start_time") var startTime:Long =System.currentTimeMillis(),
-    @ColumnInfo(name = "end_time") val endTime:Long =startTime,
-    @ColumnInfo(name = "duration_time") val duration:Long =startTime
+    @ColumnInfo(name = "end_time") var endTime:Long =startTime,
+    @ColumnInfo(name = "duration_time") var duration:Long =endTime-startTime
 
 
 
