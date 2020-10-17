@@ -73,12 +73,13 @@ class History : Fragment() {
                 listTouchHelper =ItemTouchHelper(ListTouchHelperCallback())
 
                     listTouchHelper?.attachToRecyclerView(this)
-                    addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                            super.onScrollStateChanged(recyclerView, newState)
-                            Log.i("HistoryFragment","test onScroll");
+//                    addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//                        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+//                            super.onScrollStateChanged(recyclerView, newState)
+//                            Log.i("HistoryFragment","test onScroll");
+//
+//                        }})
 
-                        }})
             }}
 
 
