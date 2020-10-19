@@ -51,6 +51,7 @@ private  val repository: Repository
             currentSession.value?.endTime=System.currentTimeMillis()
 
           repository.updateSession(currentSession.value!!)
+            currentSession.value=null
         }
 
     }

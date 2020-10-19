@@ -23,16 +23,11 @@ public abstract class HoursDatabase :RoomDatabase(){
             super.onOpen(db)
             INSTANCE?.let { database ->
                 scope.launch(Dispatchers.IO) {
-                    var helperDao= database.helperDao();
-
-                    val start:Long =System.currentTimeMillis()
-                    var hoursTable= HoursTable(0,start,start,12)
-                  helperDao.insertSession(hoursTable)
-//                    var data1 = HoursTable(0,"27 Aug 2019", "4:00 AM","5:00 PM")
-//                    helperDao.insertSession(data1)
-//                    var data2 = HoursTable(0,"29 Aug 2019", "4:00 AM","5:00 PM")
-//                    helperDao.insertSession(data2)
-
+//                    var helperDao= database.helperDao();
+//
+//                    val start:Long =System.currentTimeMillis()
+//                    var hoursTable= HoursTable(0,start,start,0)
+//                  helperDao.insertSession(hoursTable)
                 }
             }
         }

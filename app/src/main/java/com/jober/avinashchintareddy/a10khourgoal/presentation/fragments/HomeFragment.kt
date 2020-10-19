@@ -64,13 +64,20 @@ class HomeFragment : Fragment() {
         })
 
         TimerService.timerInMills.observe(viewLifecycleOwner, Observer {
-            if(hourViewModel.currentSession.value!=null) {
-                val currTime = hourViewModel.currentSession.value?.startTime
-                Log.i("Fragment home","now time "+currTime)
+            if(hourViewModel.currentSession.value!=null ) {
+                         val currTime = hourViewModel.currentSession.value?.startTime
+                         Log.i("Fragment home", "now time " + currTime)
 
-                val timeValue = System.currentTimeMillis() - currTime!!
-                Log.i("Fragment home","now time "+ TimeUnit.MINUTES.convert(timeValue, TimeUnit.MILLISECONDS)+":"+Util(timeValue).mMinute+":"+Util(timeValue).mSecond)
-                timerSystem.setTimer(timeValue.toString())
+                         val timeValue = System.currentTimeMillis() - currTime!!
+                         Log.i(
+                             "Fragment home",
+                             "now time " + TimeUnit.MINUTES.convert(
+                                 timeValue,
+                                 TimeUnit.MILLISECONDS
+                             ) + ":" + Util(timeValue).mMinute + ":" + Util(timeValue).mSecond
+                         )
+                         timerSystem.setTimer(timeValue.toString())
+
             }})
 
     }
@@ -119,6 +126,7 @@ class HomeFragment : Fragment() {
                     hourViewModel.stopSession()
                     isTimerRunning = false
                     startButton.text = "Start"
+                    //hourViewModel.currentSession.value=null
                 }
             }
         }
