@@ -49,10 +49,11 @@ class HistoryListAdapter(private val hoursList:  List<HoursTable>) : RecyclerVie
         startTime.setTimer(currTable.startTime.toString())
         endTime.setTimer(currTable.endTime.toString())
         hours.setTimer(currTable.duration.toString())
-        if(position%2==0){
+        if(currTable.startTime == currTable.endTime ){
             Log.i("ViewHodler","position "+position)
 
             holder.card.setCardBackgroundColor(Color.YELLOW)
+
 
         }
         else{
@@ -71,11 +72,7 @@ class HistoryListAdapter(private val hoursList:  List<HoursTable>) : RecyclerVie
          val card= listItemView.findViewById<CardView>(R.id.cd_view)
 
 
-            init {
-                Log.i("initblock",""+hours.msetTimer)
-                if(hours.msetTimer.equals("0:0:0")){
-                 card.setBackgroundColor(Color.RED)}
-             }
+
 
          fun bind()=with(itemView){
 

@@ -51,19 +51,14 @@ class SystemTimeViewer(context: Context, attrs: AttributeSet) : ConstraintLayout
 }
 
     private fun updateFormat(){
-        Log.i("System Timer","UpdateFormater")
         when(offSet){
            true  ->{
-                Log.i("System Timer","offset IN")
-
                 hourText.text=TimeUnit.HOURS.convert(msetTimer!!.toLong(), TimeUnit.MILLISECONDS).toString()
                     minutText.text=TimeUnit.MINUTES.convert(msetTimer!!.toLong(), TimeUnit.MILLISECONDS).toString()
                     secndsText.text=TimeUnit.SECONDS.convert(msetTimer!!.toLong(), TimeUnit.MILLISECONDS).toString()
             }
 
              false -> {
-                 Log.i("System Timer","offset Off")
-
                  if(mutilFormat!=null  ){
 
                     dateText.text = mutilFormat?.mDate
